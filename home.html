@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>IoT pump Home page</title>
+    <link rel="stylesheet" href="https://use.typekit.net/rid3oni.css">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+
+    <link rel="stylesheet" href="./homeStyle.css">
+    <link rel="stylesheet" href="./master.css">
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav id="navbar">
+        <ul class="navbar-items flexbox-col">
+            <li class="navbar-logo flexbox-left">
+                <a class="navbar-item-inner flexbox">
+                    <svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 1438.88 1819.54">
+                        <polygon points="925.79 318.48 830.56 0 183.51 1384.12 510.41 1178.46 925.79 318.48" />
+                        <polygon points="1438.88 1663.28 1126.35 948.08 111.98 1586.26 0 1819.54 1020.91 1250.57 1123.78 1471.02 783.64 1663.28 1438.88 1663.28" />
+                    </svg>
+                </a>
+            </li>
+            <li class="navbar-item flexbox-left">
+                <a class="navbar-item-inner flexbox-left">
+                    <div class="navbar-item-inner-icon-wrapper flexbox">
+                        <ion-icon name="home-outline"></ion-icon>
+                    </div>
+                    <span class="link-text">Home</span>
+                </a>
+            </li>
+
+
+
+
+            <li class="navbar-item flexbox-left">
+                <a class="navbar-item-inner flexbox-left">
+                    <div class="navbar-item-inner-icon-wrapper flexbox">
+                        <ion-icon name="person-outline"></ion-icon>
+                    </div>
+                    <span class="link-text">Account</span>
+                </a>
+            </li>
+
+            <li class="navbar-item flexbox-left">
+                <a class="navbar-item-inner flexbox-left">
+                    <div class="navbar-item-inner-icon-wrapper flexbox">
+                        <ion-icon name="pie-chart-outline"></ion-icon>
+                    </div>
+                    <span class="link-text">Dashboard</span>
+                </a>
+            </li>
+            <li class="navbar-item flexbox-left">
+                <a class="navbar-item-inner flexbox-left">
+                    <div class="navbar-item-inner-icon-wrapper flexbox">
+                        <ion-icon name="people-outline"></ion-icon>
+                    </div>
+                    <span class="link-text">Team</span>
+                </a>
+            </li>
+
+            <li class="navbar-item flexbox-left">
+                <a class="navbar-item-inner flexbox-left"id="logoutButton" >
+                    <div class="navbar-item-inner-icon-wrapper flexbox">
+                        <ion-icon name="log-out-outline"></ion-icon>
+                    </div>
+                    <span class="link-text">Log Out</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Main -->
+
+
+
+
+    <nav class="navbutton">
+        <div class="button-container">
+            <div class="power-switch">
+                <input type="checkbox" />
+                <div class="button">
+                    <svg class="power-off">
+                        <use xlink:href="#line" class="line" />
+                        <use xlink:href="#circle" class="circle" />
+                    </svg>
+                    <svg class="power-on">
+                        <use xlink:href="#line" class="line" />
+                        <use xlink:href="#circle" class="circle" />
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- SVG -->
+    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+        <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 150" id="line">
+            <line x1="75" y1="34" x2="75" y2="58" />
+        </symbol>
+        <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 150" id="circle">
+            <circle cx="75" cy="80" r="35" />
+        </symbol>
+    </svg>
+
+
+
+
+
+
+    <!-- partial:index.partial.html -->
+    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 800 600">
+        <defs>
+            <linearGradient id="liquidGrad" x1="557" y1="150" x2="557" y2="546" gradientUnits="userSpaceOnUse">
+                <stop offset="0" stop-color="#FF0909" />
+                <stop offset="0.2" stop-color="#F3481A" />
+                <stop offset="0.5" stop-color="#FABA2C" />
+                <stop offset="1" stop-color="#00BCF2" />
+            </linearGradient>
+            <rect id="tube" x="357" y="150" width="86" height="400" rx="43" ry="43" />
+            <clipPath id="liquidMask">
+                <use xlink:href="#tube" class="liquidMask" />
+            </clipPath>
+            <clipPath id="tubeMask">
+                <use xlink:href="#tube" class="liquidMask" />
+            </clipPath>
+            <path id="liquid" d="M757,552v490H357V552c50,0,50,20,100,20s50-20,100-20,50,20,100,20S707,552,757,552Z" />
+            <mask id="gradMask">
+
+                <use xlink:href="#liquid" class="liquid" x="0" fill="#FCEFD6" />
+                <use xlink:href="#liquid" class="liquid" x="0" fill="#EEE" opacity="0.7" />
+
+            </mask>
+        </defs>
+
+
+        <g class="whole" transform="translate(0, -40)">
+
+            <use xlink:href="#tube" class="tubeBg" fill="#C8D9D3" opacity="0.61" />
+
+            <g class="dragger" transform="translate(-6, 0)">
+                <circle cx="294" cy="540" r="36" fill="#3A3335" />
+                <path class="dragTip" d="M315.5,556.76,299.24,540.5l16.26-16.26,36.26,16.26Z" fill="#3A3335" />
+                <text class="label" x="294" y="551">100</text>
+                <!--  <path id="dragShine" d="M330,540c-26,2-18-44-72,0a36,36,0,0,1,72,0Z" fill="#E9E9E9" opacity="0.052"/>    -->
+            </g>
+
+
+            <g mask="url(#gradMask)">
+                <use xlink:href="#tube" fill="url(#liquidGrad)" />
+            </g>
+            <line class="tubeShine" x1="371" y1="200" x2="371" y2="443" fill="none" stroke="#FFF" stroke-linecap="round" stroke-miterlimit="10" stroke-width="8" opacity="0.21" stroke-dasharray="153 30" stroke-dashoffset="-20" />
+            <!--        <text class="tubeLabel" x="400" y="180">100�</text>
+               <text class="tubeLabel" x="400" y="356">50�</text>
+               <text class="tubeLabel" x="400" y="540">0�</text> -->
+            <g class="measurements" fill="none" stroke="#FCEFD6" stroke-width="3" stroke-linecap="round" opacity="1">
+                <line x1="358" y1="196" x2="370" y2="196" />
+                <line x1="358" y1="234" x2="370" y2="234" />
+                <line x1="358" y1="273" x2="370" y2="273" />
+                <line x1="358" y1="311" x2="370" y2="311" />
+                <line x1="358" y1="350" x2="370" y2="350" />
+                <line x1="358" y1="388" x2="370" y2="388" />
+                <line x1="358" y1="426" x2="370" y2="426" />
+                <line x1="358" y1="465" x2="370" y2="465" />
+                <line x1="358" y1="503" x2="370" y2="503" />
+            </g>
+
+            <!--  <rect class="tubeShine" x="372" y="162" width="56" height="364.02" rx="31.5" ry="31.5" fill="none" stroke="#fff" stroke-miterlimit="10" stroke-width="8" stroke-linecap="round" stroke-dasharray="15 30" opacity="0.31"/> -->
+            <circle class="follower" cx="400" cy="540" r="0" fill="#62B6CB" fill-opacity="1" stroke="#FCEFD6" stroke-width="0" />
+
+
+
+
+        </g>
+    </svg>
+
+
+
+
+
+    <!-- partial -->
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.2/TweenMax.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.2/utils/Draggable.min.js'></script>
+    <script src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/16327/MorphSVGPlugin.min.js'></script>
+
+    <script src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/16327/DrawSVGPlugin.js?r=12'></script>
+    <script src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/16327/ModifiersPlugin-latest-beta.js'></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script>
+
+
+        var xmlns = "http://www.w3.org/2000/svg",
+            xlinkns = "http://www.w3.org/1999/xlink",
+            select = function (s) {
+                return document.querySelector(s);
+            },
+            selectAll = function (s) {
+                return document.querySelectorAll(s);
+            },
+            liquid = selectAll('.liquid'),
+            tubeShine = select('.tubeShine'),
+            label = select('.label'),
+            follower = select('.follower'),
+            dragger = select('.dragger'),
+            dragTip = select('.dragTip'),
+            minDragY = -380,
+            liquidId = 0,
+            step = Math.abs(minDragY / 60),//you can adjust maximum speed value here
+            snap = Math.abs(minDragY / 10),
+            followerVY = 0
+
+
+        TweenMax.set('svg', {
+            visibility: 'visible'
+        })
+
+        TweenMax.set(dragTip, {
+            transformOrigin: '20% 50%'
+        })
+
+        var tl = new TimelineMax()
+        tl.staggerTo(liquid, 0.7, {
+            x: '-=200',
+            ease: Linear.easeNone,
+            repeat: -1
+        }, 0.9)
+
+        tl.time(100);
+
+        document.addEventListener("touchmove", function (event) {
+            event.preventDefault();
+        });
+        Draggable.create(dragger, {
+            type: 'y',
+            bounds: { minY: minDragY, maxY: 0 },
+            onDrag: onUpdate,
+            throwProps: true,
+            throwResistance: 2300,
+            onThrowUpdate: onUpdate,
+            overshootTolerance: 0,
+            snap: function (value) {
+                //Use this to snap the values to steps of 10
+                //return Math.round(value/snap) * snap
+            }
+        })
+
+        function onUpdate() {
+            // liquidId = Math.abs(Math.round(dragger._gsTransform.y / step));      integer value
+
+            liquidId = Math.abs((dragger._gsTransform.y / step).toFixed(2)) // this is your speed
+            label.textContent = liquidId + 'Hz';
+            TweenMax.to(liquid, 1.3, {
+                y: dragger._gsTransform.y * 1.12,
+                ease: Elastic.easeOut.config(1, 0.4)
+            })
+
+        }
+
+        TweenMax.to(follower, 1, {
+            y: '+=0',
+            repeat: -1,
+            modifiers: {
+                y: function (y, count) {
+                    followerVY += (dragger._gsTransform.y - follower._gsTransform.y) * 0.23;
+                    followerVY *= 0.69;
+                    return follower._gsTransform.y + followerVY;
+                }
+            }
+        })
+
+        TweenMax.to(dragTip, 1, {
+            rotation: '+=0',
+            repeat: -1,
+            modifiers: {
+                rotation: function (rotation, count) {
+                    return rotation - followerVY
+                }
+            }
+        })
+
+        TweenMax.to(label, 1, {
+            y: '+=0',
+            repeat: -1,
+            modifiers: {
+                y: function (y, count) {
+                    return y - followerVY * 0.5
+                }
+            }
+        })
+
+
+        TweenMax.to(dragger, 1.4, {
+            y: minDragY / 2,
+            onUpdate: onUpdate,
+            ease: Expo.easeInOut
+        })
+
+
+                                                            //ScrubGSAPTimeline(tl);
+
+
+        document.getElementById("logoutButton").addEventListener("click", function () {
+            window.location.href = "index.html";
+        });
+    </script>
+
+</body>
+</html>

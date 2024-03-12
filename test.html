@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Control Light</title>
+    <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-database.js"></script>
+    <script>
+       const firebaseConfig = {
+                apiKey: "AIzaSyA-D1jiMKHqNJ2K4s_AY5fTikYbuPuZNfw",
+                authDomain: "senior-project-esp8266.firebaseapp.com",
+                databaseURL: "https://senior-project-esp8266-default-rtdb.europe-west1.firebasedatabase.app",
+                projectId: "senior-project-esp8266",
+                storageBucket: "senior-project-esp8266.appspot.com",
+                messagingSenderId: "62180369424",
+                appId: "1:62180369424:web:10c6fad9a811eb7a5c9695"
+};
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
+        function updateLightStatus(status) {
+    firebase.database().ref('lightStatus').set(status);
+}
+    </script>
+</head>
+<body>
+    <button onclick="updateLightStatus('ON')">Turn Light ON</button>
+    <button onclick="updateLightStatus('OFF')">Turn Light OFF</button>
+</body>
+</html>

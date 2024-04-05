@@ -208,7 +208,7 @@
             dragTip = select('.dragTip'),
             minDragY = -380,
             liquidId = 0,
-            step = Math.abs(minDragY / 255),//you can adjust maximum speed value here
+            step = Math.abs(minDragY / 60),//you can adjust maximum speed value here
             snap = Math.abs(minDragY / 10),
             followerVY = 0
 
@@ -248,7 +248,7 @@
         })
 
         function onUpdate() {
-            // liquidId = Math.abs(Math.round(dragger._gsTransform.y / step));      integer value
+            
 
             liquidId = Math.abs(Math.round(dragger._gsTransform.y / step)); // this is your speed
             label.textContent = liquidId + 'Hz';

@@ -256,6 +256,20 @@
                 y: dragger._gsTransform.y * 1.12,
                 ease: Elastic.easeOut.config(1, 0.4)
             })
+            console.log(liquidId);
+            fetch('/updateSliderValue', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ value: liquidId })
+        })
+        .then(response => response.json())
+        .then(data => console.log('Success:', data))
+        .catch((error) => {
+            console.error('Error:', error);
+    });
+
 
         }
 
@@ -622,20 +636,3 @@
 </body>
 </html>
 
-<script>
-    document.querySelector('.dragger').addEventListener('dragend', function() {
-    const sliderValue = label.textContent.replace('Hz', ''); // Assuming your label holds the value with 'Hz'
-    fetch('/updateSliderValue', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ value: sliderValue }),
-    })
-    .then(response => response.json())
-    .then(data => console.log('Success:', data))
-    .catch((error) => {
-        console.error('Error:', error);
-    });
-});
-</script>

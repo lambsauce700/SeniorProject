@@ -1,6 +1,7 @@
 
 body {
     background-color: #abaca8;
+   
 }
 
 .output {
@@ -16,19 +17,32 @@ body {
     padding: 20px;
     margin-bottom: 10px;
 }
-h1, h2 {
+h1, h2,h3,h4 {
     font-family: 'Georgia', serif; /* Change font family */
     color: ghostwhite; /* Change font color */
+}
+h4 {
+    text-align: center;
+}
+.textTitle {
+    font-family: 'Georgia', serif; /* Change font family */
+    color: ghostwhite; /* Change font color */
+   
+  
+    
 }
 p {
     font-family: 'Georgia', serif; /* Change font family */
     color: floralwhite; /* Change font color */
+    
 }
 svg {
     width: 100%;
     height: 100%;
 }
-
+.container {
+    margin-top: 10px;
+}
 
 
 @keyframes line-animation {

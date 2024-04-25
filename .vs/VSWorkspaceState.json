@@ -1,7 +1,9 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\public",
+    "\\public\\css"
   ],
-  "SelectedNode": "\\package.json",
+  "SelectedNode": "\\SignUp(frontend).html",
   "PreviewInSolutionExplorer": false
 }

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Output Page</title>
+    <!-- Link Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Link Firebase JavaScript SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-database.js"></script>
+
+    <!--  -->
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://use.typekit.net/rid3oni.css">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+    <link rel="stylesheet" href="public/css/outputStyle.css">
+
+    <link rel="stylesheet" href="public/css/master.css">
+
+</head>
+<body>
+    <!-- Navbar -->
+    <nav id="navbar">
+        <ul class="navbar-items flexbox-col">
+            <li class="navbar-logo flexbox-left">
+                <a class="navbar-item-inner flexbox">
+                    <svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 1438.88 1819.54">
+                        <polygon points="925.79 318.48 830.56 0 183.51 1384.12 510.41 1178.46 925.79 318.48" />
+                        <polygon points="1438.88 1663.28 1126.35 948.08 111.98 1586.26 0 1819.54 1020.91 1250.57 1123.78 1471.02 783.64 1663.28 1438.88 1663.28" />
+                    </svg>
+                </a>
+            </li>
+            <li class="navbar-item flexbox-left">
+                <a class="navbar-item-inner flexbox-left" id="homeButton">
+                    <div class="navbar-item-inner-icon-wrapper flexbox">
+                        <ion-icon name="home-outline"></ion-icon>
+                    </div>
+                    <span class="link-text">Home</span>
+                </a>
+            </li>
+
+
+
+
+            <li class="navbar-item flexbox-left">
+                <a class="navbar-item-inner flexbox-left">
+                    <div class="navbar-item-inner-icon-wrapper flexbox">
+                        <ion-icon name="person-outline"></ion-icon>
+                    </div>
+                    <span class="link-text">Account</span>
+                </a>
+            </li>
+
+            <li class="navbar-item flexbox-left">
+                <a class="navbar-item-inner flexbox-left" id="outputButton">
+                    <div class="navbar-item-inner-icon-wrapper flexbox">
+                        <ion-icon name="pie-chart-outline"></ion-icon>
+                    </div>
+                    <span class="link-text">Output</span>
+                </a>
+            </li>
+            <li class="navbar-item flexbox-left">
+                <a class="navbar-item-inner flexbox-left">
+                    <div class="navbar-item-inner-icon-wrapper flexbox">
+                        <ion-icon name="people-outline"></ion-icon>
+                    </div>
+                    <span class="link-text">Team</span>
+                </a>
+            </li>
+
+            <li class="navbar-item flexbox-left">
+                <a class="navbar-item-inner flexbox-left" id="logoutButton">
+                    <div class="navbar-item-inner-icon-wrapper flexbox">
+                        <ion-icon name="log-out-outline"></ion-icon>
+                    </div>
+                    <span class="link-text">Log Out</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Navbar -->
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="output" id="voltageOutput">
+                    <h2>Voltage</h2>
+                    <!-- Display Voltage value here -->
+                    <p id="voltageValue">Loading...</p>
+                </div>
+                <div class="output" id="frequencyOutput">
+                    <h2>Frequency</h2>
+                    <!-- Display Frequency value here -->
+                    <p id="frequencyValue">Loading...</p>
+                </div>
+                <div class="output" id="speedOutput">
+                    <h2>Speed</h2>
+                    <!-- Display Speed value here -->
+                    <p id="speedValue">Loading...</p>
+                </div>
+                <div class="output" id="flowrateOutput">
+                    <h2>Flowrate</h2>
+                    <!-- Display Flowrate value here -->
+                    <p id="flowrateValue">Loading...</p>
+                </div>
+                <div class="output" id="pressureOutput">
+                    <h2>Pressure</h2>
+                    <!-- Display Pressure value here -->
+                    <p id="pressureValue">Loading...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase Configuration and Script -->
+    <script>
+        // Initialize Firebase
+        var firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_AUTH_DOMAIN",
+            databaseURL: "YOUR_DATABASE_URL",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_STORAGE_BUCKET",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+        firebase.initializeApp(firebaseConfig);
+
+        // Reference to your Firebase database
+        var database = firebase.database();
+
+        // Function to fetch and display values from Firebase
+        function fetchValues() {
+            database.ref('/outputs').once('value').then(function (snapshot) {
+                var data = snapshot.val();
+                document.getElementById("voltageValue").textContent = "Value: " + data.voltage;
+                document.getElementById("frequencyValue").textContent = "Value: " + data.frequency;
+                document.getElementById("speedValue").textContent = "Value: " + data.speed;
+                document.getElementById("flowrateValue").textContent = "Value: " + data.flowrate;
+                document.getElementById("pressureValue").textContent = "Value: " + data.pressure;
+            });
+        }
+
+        // Call the function to fetch values when the page loads
+        fetchValues();
+    </script>
+
+
+    <script>
+        document.getElementById("logoutButton").addEventListener("click", function () {
+            window.location.href = "index.html";
+        });
+        document.getElementById("outputButton").addEventListener("click", function () {
+            window.location.href = "outputpage.html";
+        });
+        document.getElementById("homeButton").addEventListener("click", function () {
+            window.location.href = "home.html";
+        });
+
+    </script>
+
+
+    <script src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/16327/MorphSVGPlugin.min.js'></script>
+
+    <script src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/16327/DrawSVGPlugin.js?r=12'></script>
+    <script src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/16327/ModifiersPlugin-latest-beta.js'></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</body>
+</html>

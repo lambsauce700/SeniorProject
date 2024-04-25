@@ -4,14 +4,26 @@ body {
 }
 
 .output {
-    background-color: #f8f9fa;
+    background-color: #00727d;
     border: 3px solid #4a4a4a;
     padding: 20px;
     margin-bottom: 10px;
 }
 
-
-
+.output1 {
+    background-color: #008898;
+    border: 3px solid #4a4a4a;
+    padding: 20px;
+    margin-bottom: 10px;
+}
+h1, h2 {
+    font-family: 'Georgia', serif; /* Change font family */
+    color: ghostwhite; /* Change font color */
+}
+p {
+    font-family: 'Georgia', serif; /* Change font family */
+    color: floralwhite; /* Change font color */
+}
 svg {
     width: 100%;
     height: 100%;

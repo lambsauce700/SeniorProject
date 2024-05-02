@@ -18,7 +18,7 @@ const port = 3000;
 
 const admin = require('firebase-admin');
 // Path to your service account key file
-const serviceAccount = require('C:\\Users\\abdul\\Desktop\\Senior Project\\SeniorProject\\senior-project-esp8266-firebase-adminsdk-2wz1p-292e6d99f8.json');
+const serviceAccount = require('./config/senior-project-esp8266-firebase-adminsdk-2wz1p-292e6d99f8.json');
 
 app.use(session({
   secret: 'ca2cab7b13ec9d04f2de7f317c8b094063b089d5de2e44b0d6223c2da559d3f31e4ddc6a6085c9054a99775b97e3a94f23f2a02d9383af23ce7434c01ad68ba3', // Change this to a long, random string in production

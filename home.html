@@ -7,10 +7,11 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
-    <link rel="stylesheet" href="public/css/homeStyle.css">
+    <link rel="stylesheet" href="/css/homeStyle.css">
 
-    <link rel="stylesheet" href="public/css/master.css">
+    <link rel="stylesheet" href="/css/master.css">
 </head>
+
 <body>
 
     <!-- Navbar -->
@@ -81,7 +82,7 @@
     <nav class="navbutton">
         <div class="button-container">
             <div class="power-switch">
-                <input type="checkbox" />
+                <input type="checkbox" id="powerToggle"/>
                 <div class="button">
                     <svg class="power-off">
                         <use xlink:href="#line" class="line" />
@@ -190,6 +191,32 @@
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+          const checkbox = document.getElementById('powerToggle');
+        
+          // Fetch initial state
+          fetch('/getLightStatus')
+            .then(response => response.json())
+            .then(data => checkbox.checked = data.status === 'ON')
+            .catch(error => console.error('Failed to fetch light status', error));
+        
+          // Update server on change
+          checkbox.addEventListener('change', function() {
+            const lightStatus = this.checked ? 'ON' : 'OFF';
+            fetch('/updateLightStatus', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ status: lightStatus })
+            })
+            .then(response => response.json())
+            .then(data => console.log(data.message))
+            .catch(error => console.error('Failed to update light status', error));
+          });
+        });
+        </script>
+    <script>
+        
+      
 
 
         var xmlns = "http://www.w3.org/2000/svg",
@@ -317,14 +344,14 @@
 
 
         document.getElementById("logoutButton").addEventListener("click", function () {
-            window.location.href = "index.html";
+            window.location.href = "/";
         });
 
         document.getElementById("outputButton").addEventListener("click", function () {
-            window.location.href = "outputpage.html";
+            window.location.href = "/outputpage";
         });
         document.getElementById("homeButton").addEventListener("click", function () {
-            window.location.href = "home.html";
+            window.location.href = "/home";
         });
     </script>
 

@@ -3,8 +3,11 @@
     "version": "0.0.1",
     "description": "Test",
     "dependencies": {
+        "dotenv": "^16.4.5",
         "express": "^4.19.2",
+        "express-session": "^1.18.0",
         "firebase-admin": "^12.0.0",
+        "libphonenumber-js": "^1.10.61",
         "node-fetch": "^2.7.0"
     }
 }

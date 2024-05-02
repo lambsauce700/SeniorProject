@@ -7,9 +7,9 @@
     <!-- Link Bootstrap CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Link Firebase JavaScript SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-database.js"></script>
+   
+
+
 
     <!--  -->
 
@@ -18,9 +18,9 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
-    <link rel="stylesheet" href="public/css/outputStyle.css">
+    <link rel="stylesheet" href="/css/outputStyle.css">
 
-    <link rel="stylesheet" href="public/css/master.css">
+    <link rel="stylesheet" href="/css/master.css">
 
 </head>
 <body>
@@ -90,81 +90,87 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-6">
-                <div class="output1" id="voltageOutput">
-                    <h2> <ion-icon name="flash-outline"></ion-icon>Voltage</h2>
+                <div  class="output1" >
+                    <h2  id="voltageOutput" > <ion-icon name="flash-outline"></ion-icon> </h2>
+                    
                     <!-- Display Voltage value here -->
-                    <p id="voltageValue">Loading...</p>
+                    <p id="voltageValue">Voltage</p>
                 </div>
-                <div class="output" id="frequencyOutput">
-                    <h2> <ion-icon name="pulse-outline"></ion-icon>Frequency</h2>
+                <div class="output" >
+                    <h2 id="frequencyOutput"> <ion-icon name="pulse-outline"></ion-icon> Frequency</h2>
                     <!-- Display Frequency value here -->
-                    <p id="frequencyValue">Loading...</p>
+                    <p id="frequencyValue">Frequency</p>
                 </div>
-                <div class="output1" id="speedOutput">
-                    <h2> <ion-icon name="speedometer-outline"></ion-icon>Speed</h2>
-                    <!-- Display Speed value here -->
-                    <p id="speedValue">Loading...</p>
+                <div class="output1" >
+                    <h2 id="speedOutput" > <ion-icon name="speedometer-outline"></ion-icon> 15</h2>
+                    
+                    <p id="speedValue">Speed</p>
                 </div>
                 <div class="output" id="flowrateOutput">
-                     <h2><ion-icon name="water-outline"></ion-icon>Flowrate</h2>
+                     <h2><ion-icon name="water-outline"></ion-icon> FlowRate</h2>
                     <!-- Display Flowrate value here -->
-                    <p id="flowrateValue">Loading...</p>
+                    <p id="flowrateValue">FlowRate</p>
                 </div>
                 <div class="output1" id="pressureOutput">
                      <h2><ion-icon name="trending-down-outline"></ion-icon> Pressure</h2>
                     <!-- Display Pressure value here -->
-                    <p id="pressureValue">Loading...</p>
+                    <p id="pressureValue">Pressure</p>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Firebase Configuration and Script -->
+    <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+
+<!-- Add Firebase products that you want to use -->
+<script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-database-compat.js"></script>
     <script>
         // Initialize Firebase
-        var firebaseConfig = {
-            apiKey: "YOUR_API_KEY",
-            authDomain: "YOUR_AUTH_DOMAIN",
-            databaseURL: "YOUR_DATABASE_URL",
-            projectId: "YOUR_PROJECT_ID",
-            storageBucket: "YOUR_STORAGE_BUCKET",
-            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-            appId: "YOUR_APP_ID"
-        };
+      
+        const firebaseConfig = {
+                apiKey: "AIzaSyA-D1jiMKHqNJ2K4s_AY5fTikYbuPuZNfw",
+                authDomain: "senior-project-esp8266.firebaseapp.com",
+                databaseURL: "https://senior-project-esp8266-default-rtdb.europe-west1.firebasedatabase.app",
+                projectId: "senior-project-esp8266",
+                storageBucket: "senior-project-esp8266.appspot.com",
+                messagingSenderId: "62180369424",
+                appId: "1:62180369424:web:10c6fad9a811eb7a5c9695"
+                };
         firebase.initializeApp(firebaseConfig);
 
         // Reference to your Firebase database
+        firebase.initializeApp(firebaseConfig);
         var database = firebase.database();
 
         // Function to fetch and display values from Firebase
         function fetchValues() {
-            database.ref('/outputs').once('value').then(function (snapshot) {
+            database.ref('/sensorData').on('value', function(snapshot) {
                 var data = snapshot.val();
-                document.getElementById("voltageValue").textContent = "Value: " + data.voltage;
-                document.getElementById("frequencyValue").textContent = "Value: " + data.frequency;
-                document.getElementById("speedValue").textContent = "Value: " + data.speed;
-                document.getElementById("flowrateValue").textContent = "Value: " + data.flowrate;
-                document.getElementById("pressureValue").textContent = "Value: " + data.pressure;
+                document.getElementById("voltageOutput").innerHTML =  data.voltage;
+                document.getElementById("frequencyOutput").textContent =  data.frequency;
+                document.getElementById("speedOutput").textContent =  data.speed;
+
             });
         }
 
         // Call the function to fetch values when the page loads
         fetchValues();
-    </script>
-
-
-    <script>
         document.getElementById("logoutButton").addEventListener("click", function () {
-            window.location.href = "index.html";
+            window.location.href = "/";
         });
+
         document.getElementById("outputButton").addEventListener("click", function () {
-            window.location.href = "outputpage.html";
+            window.location.href = "/outputpage";
         });
         document.getElementById("homeButton").addEventListener("click", function () {
-            window.location.href = "home.html";
+            window.location.href = "/home";
         });
-
     </script>
+
+
+   
 
 
     <script src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/16327/MorphSVGPlugin.min.js'></script>

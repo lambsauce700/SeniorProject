@@ -50,7 +50,7 @@ app.get('/SignUp', (req, res) => {
 // Route to update slider value in Firebase
 app.post('/updateSliderValue', (req, res) => {
   const { value } = req.body;
-  const scaledValue = scaleValue(parseInt(value, 10), [0, 60], [0, 255]);
+  const scaledValue = scaleValue(parseInt(value, 10), [0, 60], [0, 1024]);
 
   db.ref('sliderValue').set(scaledValue)
     .then(() => res.json({ status: 'Data updated successfully' }))

@@ -24,12 +24,12 @@ h1, h2,h3,h4 {
 h4 {
     text-align: center;
 }
+h3 {
+    text-align: left;
+}
 .textTitle {
     font-family: 'Georgia', serif; /* Change font family */
     color: ghostwhite; /* Change font color */
-   
-  
-    
 }
 p {
     font-family: 'Georgia', serif; /* Change font family */

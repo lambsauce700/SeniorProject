@@ -91,30 +91,30 @@
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <div  class="output1" >
-                    <h2  id="voltageOutput" > <ion-icon name="flash-outline"></ion-icon> </h2>
+                    <h2 id="voltageOutput"> <ion-icon name="flash-outline"></ion-icon>Voltage </h2>
                     
                     <!-- Display Voltage value here -->
-                    <p id="voltageValue">Voltage</p>
+                    <h3 id="voltageValue">Voltage</h3>
                 </div>
                 <div class="output" >
                     <h2 id="frequencyOutput"> <ion-icon name="pulse-outline"></ion-icon> Frequency</h2>
                     <!-- Display Frequency value here -->
-                    <p id="frequencyValue">Frequency</p>
+                    <h3 id="frequencyValue">Frequency</h3>
                 </div>
                 <div class="output1" >
-                    <h2 id="speedOutput" > <ion-icon name="speedometer-outline"></ion-icon> 15</h2>
+                    <h2 id="speedOutput" > <ion-icon name="speedometer-outline"></ion-icon> Speed</h2>
                     
-                    <p id="speedValue">Speed</p>
+                    <h3 id="speedValue">Speed</h3>
                 </div>
                 <div class="output" id="flowrateOutput">
                      <h2><ion-icon name="water-outline"></ion-icon> FlowRate</h2>
                     <!-- Display Flowrate value here -->
-                    <p id="flowrateValue">FlowRate</p>
+                    <h3 id="flowrateValue">FlowRate</h3>
                 </div>
                 <div class="output1" id="pressureOutput">
                      <h2><ion-icon name="trending-down-outline"></ion-icon> Pressure</h2>
-                    <!-- Display Pressure value here -->
-                    <p id="pressureValue">Pressure</p>
+                    <!-- Display Pressure value here  -->
+                    <h3 id="pressureValue">Pressure</h3>
                 </div>
             </div>
         </div>
@@ -148,10 +148,12 @@
         function fetchValues() {
             database.ref('/sensorData').on('value', function(snapshot) {
                 var data = snapshot.val();
-                document.getElementById("voltageOutput").innerHTML =  data.voltage;
-                document.getElementById("frequencyOutput").textContent =  data.frequency;
-                document.getElementById("speedOutput").textContent =  data.speed;
-
+                //Note: only use flowrateValue,pressureValue DO NOT USE flowrateOutput, pressureOutput, SpeedOutput, etc..
+                document.getElementById("voltageValue").innerHTML =  data.voltage;
+                document.getElementById("frequencyValue").textContent =  data.frequency;
+                document.getElementById("speedValue").textContent =  data.speed;
+                //document.getElementById("flowrateValue").textContent = data.flowrate;
+                //document.getElementById("pressureValue").textContent = data.pressure;
             });
         }
 

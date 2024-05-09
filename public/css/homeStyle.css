@@ -48,7 +48,7 @@ h1,h2,h3,h4,h5 {
     display: flex;
     justify-content: center; /* Center horizontally */
     align-items: center; /* Center vertically */
-    margin-bottom: -120px; /* Adjust the margin to decrease the gap */
+    margin-bottom: -94px; /* Adjust the margin to decrease the gap */
 }
 
 

@@ -17,6 +17,29 @@ body {
     padding: 20px;
     margin-bottom: 10px;
 }
+
+#voltageOutput {
+    display: flex;
+    align-items: center;
+}
+
+    #voltageOutput ion-icon {
+        margin-right: 5px;
+    }
+
+.voltage-text {
+    display: inline; /* Display as inline element */
+   
+}
+
+.unit {
+    font-size: 14px; /* Adjust font size for "(V)" */
+
+    margin-left: 5px; /* Add margin to separate from "Voltage" */
+}
+
+
+
 h1, h2,h3,h4 {
     font-family: 'Georgia', serif; /* Change font family */
     color: ghostwhite; /* Change font color */
@@ -42,6 +65,21 @@ svg {
 }
 .container {
     margin-top: 10px;
+    
+  
+}
+
+@media (max-width: 576px) {
+    .container {
+        width: 70%; /* Further adjust width for very small screens */
+    }
+}
+
+@media (max-width: 496px) {
+    .container {
+        width: 70%; /* Adjust width for the smallest screens */
+       
+    }
 }
 
 

@@ -90,29 +90,52 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-6">
-                <div  class="output1" >
-                    <h2 id="voltageOutput"> <ion-icon name="flash-outline"></ion-icon>Voltage </h2>
-                    
+                <div class="output1">
+                    <!--  <h2 id="voltageOutput"> <ion-icon name="flash-outline"></ion-icon>Voltage </h2>(V)-->
+                    <h2 id="voltageOutput">
+                        <ion-icon name="flash-outline"></ion-icon>
+                        <span class="voltage-text">Voltage</span>
+                        <span class="unit">(V)</span>
+                    </h2>
                     <!-- Display Voltage value here -->
                     <h3 id="voltageValue">Voltage</h3>
                 </div>
-                <div class="output" >
-                    <h2 id="frequencyOutput"> <ion-icon name="pulse-outline"></ion-icon> Frequency</h2>
+                <div class="output">
+                    
+                    <h2 id="frequencyOutput">
+                        <ion-icon name="pulse-outline"></ion-icon>
+                        <span class="voltage-text">Frequency</span>
+                        <span class="unit">(Hz)</span>
+                    </h2>
                     <!-- Display Frequency value here -->
                     <h3 id="frequencyValue">Frequency</h3>
                 </div>
-                <div class="output1" >
-                    <h2 id="speedOutput" > <ion-icon name="speedometer-outline"></ion-icon> Speed</h2>
-                    
+                <div class="output1">
+                   
+                    <h2 id="speedOutput">
+                        <ion-icon name="speedometer-outline"></ion-icon>
+                        <span class="voltage-text">Speed</span>
+                        <span class="unit">(RPM)</span>
+                    </h2>
                     <h3 id="speedValue">Speed</h3>
                 </div>
                 <div class="output" id="flowrateOutput">
-                     <h2><ion-icon name="water-outline"></ion-icon> FlowRate</h2>
+                  
+                    <h2 id="flowrateOutput">
+                        <ion-icon name="water-outline"></ion-icon>
+                        <span class="voltage-text">FlowRate</span>
+                        <span class="unit">(L/m)</span>
+                    </h2>
                     <!-- Display Flowrate value here -->
                     <h3 id="flowrateValue">FlowRate</h3>
                 </div>
                 <div class="output1" id="pressureOutput">
-                     <h2><ion-icon name="trending-down-outline"></ion-icon> Pressure</h2>
+                   
+                    <h2 id="flowrateOutput">
+                        <ion-icon name="trending-down-outline"></ion-icon>
+                        <span class="voltage-text">Pressure</span>
+                        <span class="unit">(psi)</span>
+                    </h2>
                     <!-- Display Pressure value here  -->
                     <h3 id="pressureValue">Pressure</h3>
                 </div>

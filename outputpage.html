@@ -65,11 +65,11 @@
                 </a>
             </li>
             <li class="navbar-item flexbox-left">
-                <a class="navbar-item-inner flexbox-left">
+                <a class="navbar-item-inner flexbox-left"id="timerButton">
                     <div class="navbar-item-inner-icon-wrapper flexbox">
-                        <ion-icon name="people-outline"></ion-icon>
+                        <ion-icon name="time-outline"></ion-icon>
                     </div>
-                    <span class="link-text">Team</span>
+                    <span class="link-text">Timer</span>
                 </a>
             </li>
 
@@ -191,6 +191,9 @@
         });
         document.getElementById("homeButton").addEventListener("click", function () {
             window.location.href = "/home";
+        });
+        document.getElementById("timerButton").addEventListener("click", function () {
+            window.location.href = "/TimerPage";
         });
     </script>
 

@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Output Page</title>
+    <!-- Link Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+
+
+
+
+    <!--  -->
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://use.typekit.net/rid3oni.css">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+    <link rel="stylesheet" href="/css/outputStyle.css">
+
+    <link rel="stylesheet" href="/css/master.css">
+    <link rel="stylesheet" href="/css/TimerStyle.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav id="navbar">
+        <ul class="navbar-items flexbox-col">
+            <li class="navbar-logo flexbox-left">
+                <a class="navbar-item-inner flexbox">
+                    <svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 1438.88 1819.54">
+                        <polygon points="925.79 318.48 830.56 0 183.51 1384.12 510.41 1178.46 925.79 318.48" />
+                        <polygon points="1438.88 1663.28 1126.35 948.08 111.98 1586.26 0 1819.54 1020.91 1250.57 1123.78 1471.02 783.64 1663.28 1438.88 1663.28" />
+                    </svg>
+                </a>
+            </li>
+            <li class="navbar-item flexbox-left">
+                <a class="navbar-item-inner flexbox-left" id="homeButton">
+                    <div class="navbar-item-inner-icon-wrapper flexbox">
+                        <ion-icon name="home-outline"></ion-icon>
+                    </div>
+                    <span class="link-text">Home</span>
+                </a>
+            </li>
+
+
+
+
+            <li class="navbar-item flexbox-left">
+                <a class="navbar-item-inner flexbox-left">
+                    <div class="navbar-item-inner-icon-wrapper flexbox">
+                        <ion-icon name="person-outline"></ion-icon>
+                    </div>
+                    <span class="link-text">Account</span>
+                </a>
+            </li>
+
+            <li class="navbar-item flexbox-left">
+                <a class="navbar-item-inner flexbox-left" id="outputButton">
+                    <div class="navbar-item-inner-icon-wrapper flexbox">
+                        <ion-icon name="pie-chart-outline"></ion-icon>
+                    </div>
+                    <span class="link-text">Output</span>
+                </a>
+            </li>
+            <li class="navbar-item flexbox-left">
+                <a class="navbar-item-inner flexbox-left"id="timerButton">
+                    <div class="navbar-item-inner-icon-wrapper flexbox">
+                        <ion-icon name="time-outline"></ion-icon>
+                    </div>
+                    <span class="link-text">Timer</span>
+                </a>
+            </li>
+
+            <li class="navbar-item flexbox-left">
+                <a class="navbar-item-inner flexbox-left" id="logoutButton">
+                    <div class="navbar-item-inner-icon-wrapper flexbox">
+                        <ion-icon name="log-out-outline"></ion-icon>
+                    </div>
+                    <span class="link-text">Log Out</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Navbar -->
+    <!--This is Timer to pick time range in hours 12AM-12PM-->
+    <div class="container">
+
+        <h1>Timer</h1>
+
+        <ul>
+        </ul>
+
+        <div class="multi-range"></div>
+
+        <h2><span class="start-hour"></span> - <span class="end-hour"></span></h2>
+
+        <div class="boxescontainer">
+
+
+
+            <!-- Checkboxes for days of the week -->
+            <div class="boxescontainer">
+                <label for="checkbox-1">
+                    <input type="checkbox" id="checkbox-1" name="checkbox-1" />
+                    Sunday
+                </label>
+                <label for="checkbox-2">
+                    <input type="checkbox" id="checkbox-2" name="checkbox-2" />
+                    Monday
+                </label>
+                <label for="checkbox-3">
+                    <input type="checkbox" id="checkbox-3" name="checkbox-3" />
+                    Tuesday
+                </label>
+                <label for="checkbox-4">
+                    <input type="checkbox" id="checkbox-4"
+                           name="checkbox-4" />
+                    Wedensday
+                </label>
+                <label for="checkbox-5">
+                    <input type="checkbox" id="checkbox-5"
+                           name="checkbox-5" />
+                    Thursday
+                </label>
+                <label for="checkbox-6">
+                    <input type="checkbox" id="checkbox-6"
+                           name="checkbox-6" />
+                    Friday
+                </label>
+                <label for="checkbox-7">
+                    <input type="checkbox" id="checkbox-7"
+                           name="checkbox-7" />
+                    Saturday
+                </label>
+            </div>
+        </div>
+        <ul>
+        </ul>
+        <button class="styled-button">Apply</button>
+
+    </div>
+    
+
+
+
+    <!--This is END of  Timer to pick time range in hours 12AM-12PM-->
+    <!-- End of Checkboxes for days of the week -->
+
+
+    <script>
+
+        //This below is logic for Timer picker (hours)
+        /**
+* MultiRangeSlider
+* @param {HTMLElement} elmement - the dom element that will be made the slider
+* @param {object} settings
+* @param {function} [getFormattedValue] - a function that will convert the label values
+*/
+        function MultiRangeSlider(element, settings, getFormattedValue = (value) => value) {
+            const slider = element;
+            const DOM = {};
+            let steps = [];
+            let dragging = false;
+            let currentHandle = null;
+            const getHandleOffset = () => DOM.handles[0].offsetWidth / 2;
+            const getTrackWidth = () => DOM.track.offsetWidth;
+            const getFocusedHandle = () => DOM.handles.find(handle => document.activeElement === handle);
+
+            const values = {
+                start: settings.start,
+                end: settings.end
+            };
+
+            function getSteps(sliderWidth, stepLen, handleOffset) {
+                const steps = [];
+                for (let i = 0; i <= stepLen; i++) {
+                    const stepX = i * (sliderWidth * 0.95 / stepLen) + handleOffset;
+                    const stepPercent = (i * (95 / stepLen)).toFixed(2);
+                    const value = i * settings.increment + settings.start;
+                    steps.push({
+                        value,
+                        stepX,
+                        stepPercent
+                    });
+                }
+                return steps;
+            }
+
+            const getStepLen = () => (settings.end - settings.start) / settings.increment;
+
+            const startDrag = (event) => {
+                currentHandle = event.target;
+                dragging = true;
+            };
+            const stopDrag = () => dragging = false;
+
+            function createLabels(container, settings) {
+                const labels = document.createElement("div");
+                labels.classList.add("multi-range__labels");
+                steps = getSteps(slider.offsetWidth, getStepLen(), getHandleOffset());
+                steps.forEach(step => {
+                    const label = document.createElement("label");
+                    label.classList.add("label");
+                    label.textContent = getFormattedValue(step.value);
+                    label.style.left = `${step.stepPercent}%`;
+                    labels.appendChild(label);
+                    const tick = document.createElement("div");
+                    tick.classList.add("multi-range__tick");
+                    container.appendChild(tick);
+                });
+
+                return labels;
+            }
+
+            function addElementsToDOM() {
+                const track = document.createElement("div");
+                track.classList.add("multi-range__track");
+                DOM.track = track;
+                const trackBg = document.createElement("div");
+                trackBg.classList.add("multi-range__track-bg");
+                const trackFill = document.createElement("div");
+                trackFill.classList.add("multi-range__fill");
+                DOM.trackFill = trackFill;
+                const ticksContainer = document.createElement("div");
+                ticksContainer.classList.add("multi-range__ticks");
+                let handleContainer = document.createElement("div");
+                handleContainer.classList.add("multi-range__handles");
+                const leftHandle = document.createElement("div");
+                leftHandle.classList.add("multi-range__handle");
+                leftHandle.setAttribute("data-handle-position", "start");
+                leftHandle.setAttribute("tabindex", 0);
+                const rightHandle = document.createElement("div");
+                rightHandle.classList.add("multi-range__handle");
+                rightHandle.setAttribute("data-handle-position", "end");
+                rightHandle.setAttribute("tabindex", 0);
+                handleContainer.appendChild(leftHandle);
+                handleContainer.appendChild(rightHandle);
+                DOM.handles = [leftHandle, rightHandle];
+                track.appendChild(trackBg);
+                track.appendChild(trackFill);
+                slider.appendChild(track);
+                slider.appendChild(handleContainer);
+                const labels = createLabels(ticksContainer, settings);
+                slider.appendChild(labels);
+                track.appendChild(ticksContainer);
+            }
+
+            function init() {
+                addElementsToDOM();
+                DOM.handles.forEach(handle => {
+                    handle.addEventListener("mousedown", startDrag);
+                    handle.addEventListener("touchstart", startDrag);
+                });
+                window.addEventListener("mouseup", stopDrag);
+                window.addEventListener("touchend", stopDrag);
+                window.addEventListener("resize", onWindowResize);
+                window.addEventListener("mousemove", onHandleMove);
+                window.addEventListener("touchmove", onHandleMove);
+                window.addEventListener("keydown", onKeyDown);
+            }
+
+            function dispatchEvent() {
+                let event;
+                if (window.CustomEvent) {
+                    event = new CustomEvent("slider-change", {
+                        detail: { start: values.start, end: values.end }
+                    });
+                } else {
+                    event = document.createEvent("CustomEvent");
+                    event.initCustomEvent("slider-change", true, true, {
+                        start: values.start,
+                        end: values.end
+                    });
+                }
+                slider.dispatchEvent(event);
+            }
+
+            function getClosestStep(newX, handlePosition) {
+                const isStart = handlePosition === "start";
+                const otherStep = getStep(values[isStart ? "end" : "start"]);
+                let closestDistance = Infinity;
+                let indexOfClosest = null;
+                for (let i = 0; i < steps.length; i++) {
+                    if (
+                        (isStart && steps[i].stepX < otherStep.stepX) ||
+                        (!isStart && steps[i].stepX > otherStep.stepX)
+                    ) {
+                        const distance = Math.abs(steps[i].stepX - newX);
+                        if (distance < closestDistance) {
+                            closestDistance = distance;
+                            indexOfClosest = i;
+                        }
+                    }
+                }
+                return steps[indexOfClosest];
+            }
+
+            function updateHandles() {
+                DOM.handles.forEach(function (handle, index) {
+                    const step = index === 0 ? getStep(values.start) : getStep(values.end);
+                    handle.style.left = `${step.stepPercent}%`;
+                });
+            }
+
+            const getStep = value => steps.find(step => step.value === value);
+
+            function updateFill() {
+                const trackWidth = getTrackWidth();
+                const startStep = getStep(values.start);
+                const endStep = getStep(values.end);
+                const newWidth =
+                    trackWidth - (startStep.stepX + (trackWidth - endStep.stepX));
+                const percentage = newWidth / trackWidth * 100;
+                DOM.trackFill.style.width = `${percentage}%`;
+                DOM.trackFill.style.left = `${startStep.stepPercent}%`;
+            }
+
+            function render() {
+                updateFill();
+                updateHandles();
+            }
+
+            function onHandleMove(event) {
+                event.preventDefault();
+                if (!dragging) return;
+                const handleOffset = getHandleOffset();
+                const clientX = event.clientX || event.touches[0].clientX;
+                window.requestAnimationFrame(() => {
+                    if (!dragging) return;
+                    const mouseX = clientX - slider.offsetLeft;
+                    const handlePosition = currentHandle.dataset.handlePosition;
+                    let newX = Math.max(
+                        handleOffset,
+                        Math.min(mouseX, slider.offsetWidth - handleOffset)
+                    );
+                    const currentStep = getClosestStep(newX, handlePosition);
+                    values[handlePosition] = currentStep.value;
+                    render();
+                    dispatchEvent();
+                });
+            }
+
+            function onKeyDown(e) {
+                const keyCode = e.keyCode;
+                const handle = getFocusedHandle();
+                const keys = {
+                    "37": "left",
+                    "39": "right"
+                };
+                const arrowKey = keys[keyCode];
+                if (!handle || !arrowKey) return;
+                const handlePosition = handle.dataset.handlePosition;
+                const stepIncrement = arrowKey === "left" ? -1 : 1;
+                const stepIndex = steps.findIndex(step => step.value === values[handlePosition]);
+                const newIndex = stepIndex + stepIncrement;
+                if (newIndex < 0 || newIndex >= steps.length) return;
+                values[handlePosition] = steps[newIndex].value;
+                render();
+                dispatchEvent();
+            }
+
+            function onWindowResize() {
+                steps = getSteps(slider.offsetWidth, getStepLen(), getHandleOffset());
+                render();
+            }
+
+            function update(newValues) {
+                values.start = newValues.start;
+                values.end = newValues.end;
+                render();
+            }
+
+            function on(eventType, fn) {
+                slider.addEventListener(eventType, fn);
+            }
+
+            function off(eventType, fn) {
+                slider.removeEventListener(eventType, fn);
+            }
+
+            function destroy(removeElement) {
+                DOM.handles.forEach(handle => {
+                    handle.removeEventListener("mousedown", startDrag);
+                    handle.removeEventListener("touchstart", startDrag);
+                });
+                window.removeEventListener("mouseup", stopDrag);
+                window.removeEventListener("touchend", stopDrag);
+                window.removeEventListener("resize", onWindowResize);
+                window.removeEventListener("mousemove", onHandleMove);
+                window.removeEventListener("touchmove", onHandleMove);
+                window.removeEventListener("keydown", onKeyDown);
+                if (removeElement) slider.parentNode.removeChild(slider);
+            }
+
+            init();
+
+            render();
+
+            return {
+                on,
+                off,
+                update,
+                destroy
+            };
+        }
+
+        /**
+          * Slider settings
+        **/
+        const settings = {
+            start: 0,
+            end: 23,
+            increment: 1
+        };
+
+        /**
+         * A function such as this one can be passed into
+         * MultiRangeSlider to transform the labels
+         * based on their values.
+         */
+        function getFormattedValue(value) {
+            let hour;
+            hour = value % 12 == 0 ? 12 : value % 12;
+            hour = value / 12 >= 1 ? hour + " PM" : hour + " AM";
+            return hour;
+        }
+
+
+        /**
+         * Initialize the slider
+         */
+        var slider = MultiRangeSlider(
+            document.querySelector(".multi-range"),
+            settings,
+            getFormattedValue
+        );
+
+        /**
+         * You can listen to the slider-change event
+         * which fires every time a handle is moved.
+         */
+        slider.on("slider-change", event => view.update(event.detail));
+
+        /**
+         * Helper for updating the view when slider changes
+         */
+        const view = {
+            start: document.querySelector(".start-hour"),
+            end: document.querySelector(".end-hour"),
+            update: function (values) {
+                for (let key in values) {
+                    this[key].textContent = getFormattedValue(values[key]);
+                }
+            }
+        };
+
+        view.update({
+            start: settings.start,
+            end: settings.end
+        });
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        // JavaScript to retrieve selected days
+        const checkboxes = document.querySelectorAll('.form-check-input');
+
+        function getSelectedDays() {
+            const selectedDays = [];
+            checkboxes.forEach(checkbox => {
+                if (checkbox.checked) {
+                    selectedDays.push(checkbox.value);
+                }
+            });
+            return selectedDays;
+        }
+
+
+
+
+
+
+     
+        document.getElementById("logoutButton").addEventListener("click", function () {
+            window.location.href = "/";
+        });
+
+        document.getElementById("outputButton").addEventListener("click", function () {
+            window.location.href = "/outputpage";
+        });
+        document.getElementById("homeButton").addEventListener("click", function () {
+            window.location.href = "/home";
+        });
+        document.getElementById("timerButton").addEventListener("click", function () {
+            window.location.href = "/TimerPage";
+        });
+    </script>
+
+
+
+
+
+    <script src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/16327/MorphSVGPlugin.min.js'></script>
+
+    <script src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/16327/DrawSVGPlugin.js?r=12'></script>
+    <script src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/16327/ModifiersPlugin-latest-beta.js'></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</body>
+</html>

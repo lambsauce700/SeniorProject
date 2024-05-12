@@ -49,7 +49,9 @@ app.get('/index', (req, res) => {
 app.get('/outputpage', (req, res) => {
   res.sendFile(path.join(__dirname, 'outputpage.html'));
 });
-
+app.get('/TimerPage', (req, res) => {
+    res.sendFile(path.join(__dirname, 'TimerPage.html'));
+});
 // Route for the home page
 app.get('/home', (req, res) => {
   res.sendFile(path.join(__dirname, 'home.html'));

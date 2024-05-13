@@ -267,7 +267,7 @@
             throwProps: true,
             throwResistance: 2300,
             onThrowUpdate: onUpdate,
-            overshootTolerance: 0,
+            overshootTolerance: 1,
             snap: function (value) {
                 //Use this to snap the values to steps of 10
                 //return Math.round(value/snap) * snap
@@ -331,13 +331,28 @@
                 }
             }
         })
+        
+        function mapValue(oldValue, oldMin, oldMax, newMin, newMax) {
+    return (oldValue - oldMin) * (newMax - newMin) / (oldMax - oldMin) + newMin;
+    }
+        
 
 
-        TweenMax.to(dragger, 1.4, {
-            y: minDragY / 2,
-            onUpdate: onUpdate,
-            ease: Expo.easeInOut
+        window.addEventListener('DOMContentLoaded', (event) => {
+        fetch('/getSliderInitialValue')
+        .then(response => response.json())
+        .then(data => {
+            const oldValue = data.value;  // This is the value from Firebase, ranges from 0 to 1024
+            const newValue = mapValue(oldValue, 0, 1024, 0, -380); 
+            // Assuming the slider value is directly applicable
+            TweenMax.to(dragger, 1.4, {
+                y: newValue, // Set this value correctly based on your scale
+                onUpdate: onUpdate,
+                ease: Expo.easeInOut
+            });
         })
+        .catch(error => console.error('Error fetching initial slider value:', error));
+            });
 
 
                                                             //ScrubGSAPTimeline(tl);

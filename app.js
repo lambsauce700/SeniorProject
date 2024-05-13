@@ -59,6 +59,16 @@ app.get('/home', (req, res) => {
 app.get('/SignUp', (req, res) => {
   res.sendFile(path.join(__dirname, 'SignUp(frontend).html'));
 });
+app.get('/getSliderInitialValue', (req, res) => {
+  const ref = db.ref("sliderValue"); // Adjust the path as per your Firebase database structure
+  ref.once("value", function(snapshot) {
+    const sliderValue = snapshot.val(); // Assuming the value you need is directly here
+    res.json({ value: sliderValue });
+  }, function (errorObject) {
+    console.log("The read failed: " + errorObject.code);
+    res.status(500).json({error: errorObject.code});
+  });
+});
 
 // Route to update slider value in Firebase
 app.post('/updateSliderValue', (req, res) => {

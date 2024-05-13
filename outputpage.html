@@ -119,16 +119,7 @@
                     </h2>
                     <h3 id="speedValue">Speed</h3>
                 </div>
-                <div class="output" id="flowrateOutput">
-                  
-                    <h2 id="flowrateOutput">
-                        <ion-icon name="water-outline"></ion-icon>
-                        <span class="voltage-text">FlowRate</span>
-                        <span class="unit">(L/m)</span>
-                    </h2>
-                    <!-- Display Flowrate value here -->
-                    <h3 id="flowrateValue">FlowRate</h3>
-                </div>
+                
                 <div class="output1" id="pressureOutput">
                    
                     <h2 id="flowrateOutput">
@@ -175,8 +166,7 @@
                 document.getElementById("voltageValue").innerHTML =  data.voltage;
                 document.getElementById("frequencyValue").textContent =  data.frequency;
                 document.getElementById("speedValue").textContent =  data.speed;
-                //document.getElementById("flowrateValue").textContent = data.flowrate;
-                //document.getElementById("pressureValue").textContent = data.pressure;
+                document.getElementById("pressureValue").textContent = data.pressure;
             });
         }
 

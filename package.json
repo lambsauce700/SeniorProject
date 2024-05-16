@@ -8,6 +8,7 @@
         "express-session": "^1.18.0",
         "firebase-admin": "^12.0.0",
         "libphonenumber-js": "^1.10.61",
+        "node-cron": "^3.0.3",
         "node-fetch": "^2.7.0"
     }
 }

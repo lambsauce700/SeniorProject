@@ -12,6 +12,8 @@ const session = require('express-session');
 const express = require('express');
 const fetch = require('node-fetch');
 const path = require('path');
+const cron = require('node-cron');
+
 const bodyParser = require('body-parser'); // Ensure to include bodyParser for parsing JSON request bodies
 const app = express();
 const port = 3000;
@@ -83,6 +85,31 @@ app.post('/updateSliderValue', (req, res) => {
     });
 });
 
+app.post('/setSchedule', (req, res) => {
+  const { days, startTime, endTime , enableTimer  } = req.body; // Expect days to be an array of days
+
+  if (!Array.isArray(days) || days.length === 0) {
+    return res.status(400).send({ message: 'Invalid days provided' });
+  }
+
+  const schedulesRef = db.ref('pumpControl');
+  let updates = {};
+
+  // Loop through each day and create an update object
+  days.forEach(day => {
+    updates[`schedules/${day}`] = { startTime, endTime };
+  });
+
+  updates['timerEnabled'] = enableTimer;
+
+
+  // Perform a multi-location update
+  schedulesRef.update(updates)
+    .then(() => res.status(200).send({ message: 'Schedules set successfully' }))
+    .catch(error => res.status(500).send({ message: 'Failed to set schedules', error }));
+});
+
+
 
 app.post('/login', async (req, res) => {
   const { email, password } = req.body;
@@ -112,6 +139,11 @@ app.post('/login', async (req, res) => {
 // user logout
 
 app.post('/logout', (req, res) => {
+  if (req.session.user) {
+    console.log("Logging out user:", req.session.user); // Print the user object if exists
+} else {
+    console.log("No user found in session to log out."); // Debug message if no user is in session
+}
   req.session.destroy((err) => {
     if (err) {
       return res.status(500).send({ status: 'error', message: 'Could not log out, please try again' });
@@ -146,13 +178,50 @@ app.post('/signup', (req, res) => {
       res.status(500).json({ status: 'error', message: error.message });
   });
 });
+function checkSchedules(schedules) {
+  const now = new Date();
+  const currentDay = now.toLocaleString('en-us', { weekday: 'long' }); // "Monday", "Tuesday", etc.
+  const currentTime = now.toTimeString().substr(0, 5); // "HH:MM" format
 
+  let shouldBeOn = false;
+
+  if (schedules[currentDay]) {
+    const { startTime, endTime } = schedules[currentDay];
+    const startTime24 = convertTo24Hour(startTime);
+    const endTime24 = convertTo24Hour(endTime);
+
+    if (currentTime >= startTime24 && currentTime < endTime24) {
+      shouldBeOn = true;
+    }
+  }
+
+  const lightStatusRef = db.ref('lightStatus');
+  lightStatusRef.set(shouldBeOn ? 'ON' : 'OFF')
+    .then(() => console.log(`Timer set to ${shouldBeOn ? 'ON' : 'OFF'}`))
+    .catch(error => console.error("Error updating light status:", error));
+}
 
 app.post('/updateLightStatus', (req, res) => {
-  const status = req.body.status;
-  db.ref('lightStatus').set(status)
-    .then(() => res.send({ message: 'Updated successfully!' }))
-    .catch(error => res.status(500).send({ error: error.message }));
+  const { status } = req.body;  // Destructure the status from the request body
+
+  // References for lightStatus and pumpControl/timerEnabled
+  const lightStatusRef = db.ref('lightStatus');
+  const timerEnabledRef = db.ref('pumpControl/timerEnabled');
+
+  // Update lightStatus independently
+  lightStatusRef.set(status)
+    .then(() => {
+      // If lightStatus update is successful, then disable the timer
+      return timerEnabledRef.set(false);
+    })
+    .then(() => {
+      // Send a response if both updates are successful
+      res.send({ message: 'Light status updated and timer disabled successfully!' });
+    })
+    .catch(error => {
+      // Handle any errors that occur during the update
+      res.status(500).send({ error: error.message });
+    });
 });
 
 // Endpoint to get current lightStatus
@@ -161,6 +230,61 @@ app.get('/getLightStatus', (req, res) => {
     .then(snapshot => res.send({ status: snapshot.val() }))
     .catch(error => res.status(500).send({ error: error.message }));
 });
+
+// Schedule to run every 10 seconds
+cron.schedule('*/10 * * * * *', () => {
+  const controlRef = db.ref('pumpControl/');
+  controlRef.once('value', snapshot => {
+    const pumpControl = snapshot.val();
+    console.log()
+    if (pumpControl.timerEnabled) {
+      checkSchedules(pumpControl.schedules);
+    } else {
+      console.log("Timer is disabled. No action taken.");
+    }
+  }).catch(error => {
+    console.error("Error fetching control settings:", error);
+  });
+});
+
+// function checkSchedules() {
+//   const ref = db.ref('lightStatus');
+//   const schedulesRef = db.ref('pumpControl/schedules');
+//   schedulesRef.once('value', snapshot => {
+//     const schedules = snapshot.val();
+//     const now = new Date();
+//     const currentDay = now.getDay();  // Sunday - 0, Monday - 1, ..., Saturday - 6
+//     const currentTime = `${now.getHours()}:${now.getMinutes()}`;
+
+//     let shouldBeOn = false;
+
+//     Object.keys(schedules).forEach(key => {
+//       const schedule = schedules[key];
+//       if (schedule.days.includes(currentDay)) {
+//         const startTime = schedule.startTime;
+//         const endTime = schedule.endTime;
+//         if (currentTime >= startTime && currentTime < endTime) {
+//           shouldBeOn = true;
+//         }
+//       }
+//     });
+
+//     ref.set(shouldBeOn ? 'ON' : 'OFF');
+//   });
+// }
+
+// cron.schedule('* * * * *', checkSchedules);
+function convertTo24Hour(timeStr) {
+  const [time, modifier] = timeStr.split(' ');
+  let [hours, minutes] = time.split(':');
+  if (hours === '12') {
+      hours = '00';
+  }
+  if (modifier === 'PM') {
+      hours = parseInt(hours, 10) + 12;
+  }
+  return `${hours}:${minutes}`;
+}
 
 // Start the server
 app.listen(port, () => {

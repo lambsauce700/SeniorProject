@@ -97,46 +97,48 @@
 
         <h2><span class="start-hour"></span> - <span class="end-hour"></span></h2>
 
-        <div class="boxescontainer">
 
 
 
             <!-- Checkboxes for days of the week -->
             <div class="boxescontainer">
                 <label for="checkbox-1">
-                    <input type="checkbox" id="checkbox-1" name="checkbox-1" />
+                    <input type="checkbox" id="checkbox-1" name="checkbox-1" value="Sunday" class="CheckBox" />
                     Sunday
                 </label>
                 <label for="checkbox-2">
-                    <input type="checkbox" id="checkbox-2" name="checkbox-2" />
+                    <input type="checkbox" id="checkbox-2" name="checkbox-2" value="Monday" class="CheckBox"/>
                     Monday
                 </label>
                 <label for="checkbox-3">
-                    <input type="checkbox" id="checkbox-3" name="checkbox-3" />
+                    <input type="checkbox" id="checkbox-3" name="checkbox-3" value="Tuesday" class="CheckBox"/>
                     Tuesday
                 </label>
                 <label for="checkbox-4">
-                    <input type="checkbox" id="checkbox-4"
-                           name="checkbox-4" />
+                    <input type="checkbox" id="checkbox-4" name="checkbox-4" value="Wedensday" class="CheckBox" />
                     Wedensday
                 </label>
                 <label for="checkbox-5">
                     <input type="checkbox" id="checkbox-5"
-                           name="checkbox-5" />
+                           name="checkbox-5" value="Thursday" class="CheckBox" />
                     Thursday
                 </label>
                 <label for="checkbox-6">
                     <input type="checkbox" id="checkbox-6"
-                           name="checkbox-6" />
+                           name="checkbox-6" value="Friday" class="CheckBox" />
                     Friday
                 </label>
                 <label for="checkbox-7">
                     <input type="checkbox" id="checkbox-7"
-                           name="checkbox-7" />
+                           name="checkbox-7" value="Saturday"  class="CheckBox" />
                     Saturday
                 </label>
+                <label for="enableTimer">
+                    <input type="checkbox" id="enableTimer"
+                           name="enableTimer"   class="CheckBox" />
+                    Enable Timer
+                </label>
             </div>
-        </div>
         <ul>
         </ul>
         <button class="styled-button" id="applyButton">Apply</button>
@@ -466,23 +468,6 @@
 
         //////////////////////////////////////////////////////////////////////////////////////////
         // JavaScript to retrieve selected days
-        const checkboxes = document.querySelectorAll('.form-check-input');
-
-        function getSelectedDays() {
-            const selectedDays = [];
-            checkboxes.forEach(checkbox => {
-                if (checkbox.checked) {
-                    selectedDays.push(checkbox.value);
-                }
-            });
-            return selectedDays;
-        }
-
-
-
-
-
-
 
         document.getElementById("logoutButton").addEventListener("click", function () {
             window.location.href = "/";
@@ -497,9 +482,59 @@
         document.getElementById("timerButton").addEventListener("click", function () {
             window.location.href = "/TimerPage";
         });
-        document.getElementById("applyButton").addEventListener("click", function () {
-            window.location.href = "/home";
+
+
+
+        document.addEventListener('DOMContentLoaded', function() {
+    // All your JavaScript code inside here
+    const checkboxes = document.querySelectorAll('.CheckBox');
+
+    function getSelectedDays() {
+        const selectedDays = [];
+        console.log("Total checkboxes found:", checkboxes.length);  // Check if checkboxes are correctly found
+        checkboxes.forEach(checkbox => {
+            console.log("Checkbox value:", checkbox.value, "Checked:", checkbox.checked);  // Detailed log for each checkbox
+            if (checkbox.checked) {
+                selectedDays.push(checkbox.value);
+            }
         });
+        console.log("Selected days:", selectedDays);  // This should log the selected days
+        return selectedDays;
+    }
+
+    document.getElementById("applyButton").addEventListener("click", function () {
+        const selectedDays = getSelectedDays();
+        const startTime = document.querySelector(".start-hour").textContent;
+        const endTime = document.querySelector(".end-hour").textContent;
+        const enableTimer = document.getElementById("enableTimer").checked;
+
+
+        fetch('/setSchedule', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                days: selectedDays,
+                startTime: startTime,
+                endTime: endTime,
+                enableTimer: enableTimer
+
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Success:', data);
+            window.location.href = "/home";
+
+             // Redirect on success
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    });
+});
+
     </script>
 
 

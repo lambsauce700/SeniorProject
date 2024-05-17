@@ -181,7 +181,7 @@ app.post('/signup', (req, res) => {
 function checkSchedules(schedules) {
   const now = new Date();
   const currentDay = now.toLocaleString('en-us', { weekday: 'long' }); // "Monday", "Tuesday", etc.
-  const currentTime = now.toTimeString().substr(0, 5); // "HH:MM" format
+  const currentTime = parseInt(now.toTimeString().substr(0, 2), 10);
 
   let shouldBeOn = false;
 
@@ -189,8 +189,12 @@ function checkSchedules(schedules) {
     const { startTime, endTime } = schedules[currentDay];
     const startTime24 = convertTo24Hour(startTime);
     const endTime24 = convertTo24Hour(endTime);
+    console.log(startTime24);
+    console.log(endTime24);
+    console.log(currentTime);
 
-    if (currentTime >= startTime24 && currentTime < endTime24) {
+
+    if ((currentTime >= startTime24) && (currentTime < endTime24)) {
       shouldBeOn = true;
     }
   }
@@ -277,13 +281,18 @@ cron.schedule('*/10 * * * * *', () => {
 function convertTo24Hour(timeStr) {
   const [time, modifier] = timeStr.split(' ');
   let [hours, minutes] = time.split(':');
-  if (hours === '12') {
-      hours = '00';
+
+  // Convert the hour string to an integer to handle it numerically
+  hours = parseInt(hours, 10);
+
+  if (hours === 12) {
+      hours = 0; // Midnight case should be zero not 12 in 24-hour time
   }
-  if (modifier === 'PM') {
-      hours = parseInt(hours, 10) + 12;
+  if (modifier === 'PM' && hours != 12) { // Handle PM times but exclude 12 PM which is already correct
+      hours += 12;
   }
-  return `${hours}:${minutes}`;
+
+  return hours; // Return the hour as an integer
 }
 
 // Start the server
